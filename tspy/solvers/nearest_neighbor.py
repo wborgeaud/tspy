@@ -51,5 +51,4 @@ class NN_solver:
                     ans = costs
                     best_hist = hist
             hist = best_hist
-        print('The cost is {}'.format(ans))
-        tsp.tours[self.__class__.__name__]=hist
+        return hist

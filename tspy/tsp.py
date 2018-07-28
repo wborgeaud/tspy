@@ -1,6 +1,7 @@
 import numpy as np
 from scipy.spatial.distance import pdist, squareform
 import matplotlib.pyplot as plt
+from .solvers.utils import get_cost
 
 class TSP:
     """ Base class for a TSP instance"""
@@ -27,7 +28,9 @@ class TSP:
             raise Exception('No 2d data of the instance has been loaded')
 
     def get_approx_sol(self, solver):
-        solver.solve(self)
+        tour = solver.solve(self)
+        print('The cost is {}.'.format(get_cost(tour,self)))
+        self.tours[solver.__class__.__name__] = tour
 
     def plot_solution(self,which):
         if isinstance(which, int):

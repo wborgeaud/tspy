@@ -1,5 +1,6 @@
 import numpy as np
 from .utils import get_cost
+from .nearest_neighbor import NN_solver
 
 
 class TwoOpt_solver:
@@ -9,6 +10,9 @@ class TwoOpt_solver:
         self.iter_num = iter_num
 
     def solve(self, tsp):
+        if self.initial_tour == 'NN':
+            self.initial_tour = NN_solver().solve(tsp)
+
         best_tour = self.initial_tour
         old_best = np.inf
         for _ in range(self.iter_num):
@@ -26,13 +30,10 @@ class TwoOpt_solver:
                             best = cost
                             best_tour = ftour
             if best == old_best:
-                print('The cost is {}.'.format(best))
-                tsp.tours[self.__class__.__name__]=best_tour
-                return
+                return best_tour
             else:
                 old_best = best
-        print('The cost is {}.'.format(best))
-        tsp.tours[self.__class__.__name__]=best_tour
+        return best_tour
 
 
 
