@@ -18,10 +18,10 @@ class TwoOpt_solver:
         """
         self.initial_tour = initial_tour
         self.iter_num = iter_num
+
     def solve(self, tsp):
         if self.initial_tour == 'NN':
             self.initial_tour = NN_solver().solve(tsp)
-
         best_tour = self.initial_tour
         old_best = np.inf
         for _ in range(self.iter_num):

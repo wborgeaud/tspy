@@ -8,12 +8,11 @@ N = 150
 a.read_data(np.random.rand(N,2))
 
 sol = NN_solver()
-a.get_approx_sol(sol)
+a.get_approx_solution(sol)
 
 a.plot_solution('NN_solver')
 
 sol = TwoOpt_solver(list(a.tours.values())[0],500)
-a.get_approx_sol(sol)
+a.get_approx_solution(sol)
 a.plot_solution('TwoOpt_solver')
 
-print(a.tours)
