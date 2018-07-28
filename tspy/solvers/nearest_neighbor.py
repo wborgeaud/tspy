@@ -1,7 +1,7 @@
 import numpy as np
 class NN_solver:
 
-    def __init__(self, starting_point):
+    def __init__(self, starting_point='best'):
         self.starting_point = starting_point
         if starting_point == 'best':
             self.starting_point = -1
@@ -52,4 +52,4 @@ class NN_solver:
                     best_hist = hist
             hist = best_hist
         print('The cost is {}'.format(ans))
-        tsp.tours['Nearest neighbor'] = hist
+        tsp.tours[self.__class__.__name__]=hist
