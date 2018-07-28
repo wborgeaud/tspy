@@ -1,7 +1,18 @@
+""" Nearest neighbor heuristic for TSP """
+
 import numpy as np
+
 class NN_solver:
+    """ Class for Nearest Neighbor Solver """
 
     def __init__(self, starting_point='best'):
+        """
+        Parameters
+        ----------
+        starting_point : int or str
+                         The starting node for the solution. If starting_point
+                         is 'best' returns the best solution over all nodes.
+        """
         self.starting_point = starting_point
         if starting_point == 'best':
             self.starting_point = -1

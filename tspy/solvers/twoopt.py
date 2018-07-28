@@ -1,3 +1,5 @@
+""" 2-opt heuristic for TSP """
+
 import numpy as np
 from .utils import get_cost
 from .nearest_neighbor import NN_solver
@@ -6,9 +8,16 @@ from .nearest_neighbor import NN_solver
 class TwoOpt_solver:
 
     def __init__(self, initial_tour, iter_num=100):
+        """
+        Parameters
+        ----------
+        initial_tour : permutation of the nodes
+                       Starting tour on which to apply 2-opt
+        iter_num : int
+                   Number of iterations in the local 2-opt search
+        """
         self.initial_tour = initial_tour
         self.iter_num = iter_num
-
     def solve(self, tsp):
         if self.initial_tour == 'NN':
             self.initial_tour = NN_solver().solve(tsp)

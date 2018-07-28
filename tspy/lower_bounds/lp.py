@@ -9,14 +9,15 @@ class Simple_LP_bound:
 
     def bound(self, tsp):
         sol = _lp(tsp.mat,[])
-        print(sol['primal objective'])
         sol['x'] = _clean_sol(sol['x'])
+        self.sol = sol
         return sol
 
 class Connected_LP_bound:
 
     def bound(self, tsp):
-        sol = Simple_LP_bound().bound(tsp)['x']
+        opt_res = Simple_LP_bound().bound(tsp)
+        sol = opt_res['x']
         N = tsp.N
         mat = tsp.mat
         SS = []
@@ -34,24 +35,28 @@ class Connected_LP_bound:
             k = CC[0] 
             if k == 1:
                 if not SS:
-                    return sol
+                    self.constraints = SS
+                    self.sol = opt_res
+                    return opt_res
                 break
             for i in range(k):
                 SS.append(np.arange(N)[CC[1]==i])
             opt_res = _lp(mat, SS)
             sol = _clean_sol(opt_res['x'])
             opt_res['x'] = sol
-            print('The current cost is', opt_res['primal objective'])
-        return opt_res, SS
+        self.constraints = SS
+        self.sol = opt_res
+        return opt_res
 
 class MinCut_LP_bound:
 
     def bound(self,tsp):
-        sol = Connected_LP_bound().bound(tsp)
-        if len(sol)==1:
-            return sol
-        SS = sol[1]
-        sol = sol[0]['x']
+        conn = Connected_LP_bound()
+        opt_res = conn.bound(tsp)
+        if not conn.constraints:
+            return opt_res
+        SS = conn.constraints
+        sol = opt_res['x']
         N = tsp.N
         mat = tsp.mat
         k = 1
@@ -69,9 +74,8 @@ class MinCut_LP_bound:
                 for ii in range(CC[0]):
                     SS.append(np.arange(N)[CC[1]==ii])
                 opt_res = _lp(mat,SS)
-                sol = np.array(opt_res['x']).ravel()
-                sol = np.round(sol,5)
-                sol = np.abs(sol)
+                opt_res['x'] = _clean_sol(opt_res['x'])
+                sol = opt_res['x']
                 graph = np.zeros((N,N))
                 count=0
                 for i in range(N):
@@ -85,17 +89,16 @@ class MinCut_LP_bound:
             cut = nx.stoer_wagner(nx.Graph(graph))
             k = cut[0]
             if k>1.95:
-                print(k)
-                print('The cost is', opt_res['primal objective'])
                 break
             part = cut[1]
             smpart = part[0] if len(part[0])<len(part[1]) else part[1]
             SS.append(smpart)
             opt_res = _lp(mat,SS)
-            sol = np.array(opt_res['x']).ravel()
-            sol = np.round(sol,5)
-            sol = np.abs(sol)
-            print('The cost is', opt_res['primal objective'])
+            opt_res['x'] = _clean_sol(opt_res['x'])
+            sol = opt_res['x']
+        self.sol = opt_res
+        return opt_res
+
 
 def _lp(mat,SS):
     N = len(mat)
