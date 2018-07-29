@@ -36,7 +36,7 @@ Current solutions are stored in the dictionary `tsp.tours`. If a data matrix has
 ```python
 tsp.plot_solution('TwoOpt_solver')
 ```
-![alt text](https://github.com/wborgeaud/tspy/tree/master/imges/two_opt_sol.png)
+![alt text](https://github.com/wborgeaud/tspy/blob/master/images/two_opt_sol.png)
 
 
 
