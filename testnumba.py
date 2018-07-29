@@ -12,6 +12,7 @@ sol = TwoOpt_solver('NN')
 a.get_approx_solution(sol)
 plt.figure(figsize=(5,5))
 a.plot_solution('TwoOpt_solver')
+#plt.savefig('images/two_opt_sol.png',bbox_inches='tight')
 
 a.get_lower_bound(Connected_LP_bound())
 a.get_lower_bound(Held_Karp(n_iter=1000, batch_size=50,
