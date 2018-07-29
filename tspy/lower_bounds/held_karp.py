@@ -5,7 +5,7 @@ import matplotlib.pyplot as plt
 
 class Held_Karp:
 
-    def __init__(self, n_iter=100, batch_size=10, alp_factor=0.95,
+    def __init__(self, n_iter=100, batch_size=10, alp_factor=0.95, start_alp=2,
                  remove_node=0):
         self.n_iter = n_iter
         self.batch_size = batch_size
@@ -33,6 +33,7 @@ class Held_Karp:
             ans.append(sum(mat0[minimum_spanning_tree(mat0).toarray()!=0]) + sum(sorted(matN[i])[:2]) + 2*sum(vec))
             inter = np.array([sum(tree[0]==i) + sum(tree[1]==i) for i in range(N-1)])
             coef = alp*(U-ans[-1])/(np.sum((2-inter)**2))
+            coef = 0.001
             ran = np.append(np.arange(0,self.remove_node),np.arange(self.remove_node+1,N))
             vec[ran] = vec[ran] + coef * (2-inter)    
         print('The lower bound is ', max(ans))

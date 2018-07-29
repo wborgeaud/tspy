@@ -2,6 +2,6 @@
 
 __version__ = '0.1.0'
 __author__ = 'William Borgeaud <williamborgeaud@gmail.com>'
-__all__ = []
+__all__ = ['TSP']
 
 from .tsp import TSP
