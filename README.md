@@ -21,6 +21,9 @@ tsp.read_mat(D)
 
 # Using the data matrix and a distance function
 tsp.read_data(X, dist)
+
+# Using a list of coordinates (with the Euclidean distance)
+tsp.read_data([(0,0), (0,1), (1,0), (1,1)])
 ```
 
 ### Computing approximate solutions
